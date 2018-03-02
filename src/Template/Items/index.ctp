@@ -2,13 +2,25 @@
 /**
   * @var \App\View\AppView $this
   */
+$this->start('extra-styles');
+?>
+<style type="text/css">
+table#items_list td{
+    padding: 0 5px;
+}
+table#items_list td.price{
+    text-align:right;
+}
+</style>
+<?php
+$this->end();
 ?>
 <div class="btn-group" role="group">
 	<?= $this->Html->link(__('New Item'), ['action' => 'add'],['class'=>'btn btn-success','role'=>'button']) ?>
 </div>
 <div class="items index large-9 medium-8 columns content">
     <h3><?= __('Items') ?></h3>
-    <table cellpadding="0" cellspacing="0">
+    <table id="items_list" cellpadding="0" cellspacing="0">
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
@@ -25,12 +37,11 @@
             <tr>
                 <td><?= $this->Number->format($item->id) ?></td>
                 <td><?= $item->has('category') ? $this->Html->link($item->category->name, ['controller' => 'Categories', 'action' => 'view', $item->category->id]) : '' ?></td>
-                <td><?= h($item->name) ?></td>
-                <td><?= h($item->price[0]->price) ?></td>
+                <td><?= $this->Html->link(h($item->name),['controller' => 'Items', 'action' => 'view', $item->id]) ?></td>
+                <td class="price"><?= number_format($item->price[0]->price,2,'.',',') ?></td>
                 <td><?= h($item->created) ?></td>
                 <td><?= h($item->modified) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $item->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $item->id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $item->id], ['confirm' => __('Are you sure you want to delete # {0}?', $item->id)]) ?>
                 </td>

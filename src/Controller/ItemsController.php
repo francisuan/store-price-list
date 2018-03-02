@@ -54,9 +54,14 @@ class ItemsController extends AppController
         if ($this->request->is('post')) {
             $item = $this->Items->patchEntity($item, $this->request->getData());
             if ($this->Items->save($item)) {
-                $this->Flash->success(__('The item has been saved.'));
+                $price = $this->Items->Price->newEntity();
+                $price->item_id = $item->id;
+                $price->price = $item->Price['price'];
+                if($this->Items->Price->save($price)){
+                    $this->Flash->success(__('The item has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['action' => 'index']);
+                }
             }
             $this->Flash->error(__('The item could not be saved. Please, try again.'));
         }
