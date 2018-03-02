@@ -21,22 +21,25 @@
       <![endif]-->
     </head>
     <body>
-     <nav class="navbar navbar-default navbar-static-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span> Store Price List</a>
-          <button class="navbar-toggler btn btn-default pull-right visible-phone" type="button" data-toggle="collapse" data-target="#navbar-1" aria-controls="navbar-1" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="glyphicon glyphicon-menu-hamburger"></span>
-          </button>
+     <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span> Store Price List</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/items">Items</a></li>
+              <li><a href="/categories">Categories</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
         </div>
-        <div id="navbar-1" class="collapse navbar-collapse" role="navigation">
-         <ul class="nav navbar-nav navbar-right">
-          <li><a href="/categories">Categories</a></li>
-          <li><a href="/items">Items</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+      </nav>
   <div class="container">
     <?= $this->Flash->render() ?>
     <?= $this->fetch('content') ?>
