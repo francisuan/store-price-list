@@ -80,11 +80,19 @@ class ItemsController extends AppController
     public function edit($id = null)
     {
         $item = $this->Items->get($id, [
-            'contain' => []
+            'contain' => ['Price']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $submitted_data = $this->request->getData();
             $item = $this->Items->patchEntity($item, $this->request->getData());
             if ($this->Items->save($item)) {
+                //if there is a change of price, create a new instance on the price table
+                if($item->price[0]->price!=$submitted_data['Price']['price']){
+                    $price = $this->Items->Price->newEntity();
+                    $price->item_id = $item->id;
+                    $price->price = $submitted_data['Price']['price'];
+                    $this->Items->Price->save($price);
+                }   
                 $this->Flash->success(__('The item has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
